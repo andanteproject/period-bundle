@@ -1,0 +1,68 @@
+{
+    "name": "andanteproject/period-bundle",
+    "description": "A Symfony Bundle to integrate thephpleague/period into Doctrine and Symfony Form",
+    "keywords": [
+        "php7",
+        "php74",
+        "symfony",
+        "symfony-bundle",
+        "date",
+        "datetime",
+        "datetime-range",
+        "datetime-period",
+        "period",
+        "symfony-form",
+        "form",
+        "doctrine",
+        "doctrine-orm",
+        "doctrine-type"
+    ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andante Project",
+            "homepage": "https://github.com/andanteproject"
+        },
+        {
+            "name": "Cristoforo Cervino",
+            "homepage": "https://github.com/StevioStudio"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "symfony/framework-bundle": "^4.4 | ^5.0",
+        "league/period": "^4.0",
+        "doctrine/doctrine-bundle": "^2.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpstan/phpstan-symfony": "^0.12.20",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpstan/phpstan": "^0.12.78",
+        "symfony/yaml": "^5.2",
+        "phpunit/phpunit": "^9.5",
+        "ext-json": "*",
+        "doctrine/orm": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andante\\PeriodBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Andante\\PeriodBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse src tests",
+        "phpunit-base": "phpunit tests/",
+        "phpunit": "@phpunit-base --testdox",
+        "phpunit-coverage-text": "@phpunit-base --coverage-text --colors=never",
+        "cs-check": "mkdir -p var/cache && php-cs-fixer fix --dry-run --diff --cache-file=var/cache/.php_cs.cache --config=.php_cs.dist",
+        "cs-fix": "mkdir -p var/cache && php-cs-fixer fix --diff --cache-file=var/cache/.php_cs.cache --config=.php_cs.dist"
+    }
+}
