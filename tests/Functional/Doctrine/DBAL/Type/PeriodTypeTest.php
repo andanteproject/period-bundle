@@ -22,7 +22,7 @@ class PeriodTypeTest extends KernelTestCase
     public function testTypeOnDatabase(): void
     {
         $this->createSchema();
-        $period = new Period(
+        $period = Period::fromDatepoint(
             \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
             \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00'),
             Period::INCLUDE_START_EXCLUDE_END

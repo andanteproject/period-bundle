@@ -58,7 +58,7 @@ class PeriodType extends JsonType
         $endDate = $value['endDate'] ?? null;
         $boundaryType = $value['boundaryType'] ?? null;
 
-        return new Period(
+        return Period::fromDatepoint(
             \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $startDate),
             \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $endDate),
             (string) $boundaryType

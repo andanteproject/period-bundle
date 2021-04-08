@@ -25,12 +25,12 @@ class SequenceTypeTest extends KernelTestCase
     {
         $this->createSchema();
         $sequence = new Sequence(
-            new Period(
+            Period::fromDatepoint(
                 \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
                 \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00'),
                 Period::INCLUDE_START_EXCLUDE_END
             ),
-            new Period(
+            Period::fromDatepoint(
                 \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-03 00:00:00'),
                 \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 00:00:00'),
                 Period::EXCLUDE_ALL
