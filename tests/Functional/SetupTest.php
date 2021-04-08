@@ -23,6 +23,7 @@ class SetupTest extends KernelTestCase
 
     public function testDoctrineTypeSetup(): void
     {
+        /** @var array $types */
         $types = self::$container->getParameter('doctrine.dbal.connection_factory.types');
 
         self::assertArrayHasKey(DurationType::NAME, $types);

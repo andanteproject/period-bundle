@@ -42,6 +42,7 @@ class SequenceTypeTest extends KernelTestCase
         $em->persist($article);
         $em->flush();
         $em->clear();
+        /** @var ArticleWithSequence $article */
         $article = $em->getRepository(ArticleWithSequence::class)->findOneBy([]);
         self::assertEquals($sequence, $article->getPeriod());
     }

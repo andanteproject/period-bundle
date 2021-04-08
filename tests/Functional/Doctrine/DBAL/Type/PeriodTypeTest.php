@@ -33,6 +33,7 @@ class PeriodTypeTest extends KernelTestCase
         $em->persist($article);
         $em->flush();
         $em->clear();
+        /** @var ArticleWithPeriod $article */
         $article = $em->getRepository(ArticleWithPeriod::class)->findOneBy([]);
         self::assertEquals($period, $article->getPeriod());
     }

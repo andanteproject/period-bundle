@@ -34,12 +34,12 @@ class ArticleWithPeriod
         return $this->id;
     }
 
-    public function getPeriod(): Period
+    public function getPeriod(): ?Period
     {
         return $this->period;
     }
 
-    public function setPeriod(Period $period): self
+    public function setPeriod(?Period $period): self
     {
         $this->period = $period;
         return $this;

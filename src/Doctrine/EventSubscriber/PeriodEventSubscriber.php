@@ -30,7 +30,7 @@ class PeriodEventSubscriber implements EventSubscriber
         ];
     }
 
-    public function postLoad(LifecycleEventArgs $eventArgs)
+    public function postLoad(LifecycleEventArgs $eventArgs):void
     {
         $object = $eventArgs->getObject();
         foreach (\array_keys($this->entitiesWithEmbeddedPeriod) as $entityWithEmbeddedPeriod) {

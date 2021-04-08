@@ -20,6 +20,7 @@ class DurationTypeTest extends KernelTestCase
     public function testTypeOnDatabase(): void
     {
         $this->createSchema();
+        /** @var Duration $duration */
         $duration = Duration::createFromDateString('1 hour');
         $article = new ArticleWithDuration($duration);
         /** @var EntityManagerInterface $em */
@@ -27,6 +28,7 @@ class DurationTypeTest extends KernelTestCase
         $em->persist($article);
         $em->flush();
         $em->clear();
+        /** @var ArticleWithDuration $article */
         $article = $em->getRepository(ArticleWithDuration::class)->findOneBy([]);
         self::assertEquals($duration, $article->getDuration());
     }

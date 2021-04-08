@@ -34,6 +34,7 @@ class PeriodEmbeddedTest extends KernelTestCase
         $em->persist($article);
         $em->flush();
         $em->clear();
+        /** @var ArticleWithPeriodEmbedded $article */
         $article = $em->getRepository(ArticleWithPeriodEmbedded::class)->findOneBy([]);
         self::assertEquals($period, $article->getPeriod());
     }
@@ -48,6 +49,7 @@ class PeriodEmbeddedTest extends KernelTestCase
         $em->persist($article);
         $em->flush();
         $em->clear();
+        /** @var ArticleWithPeriodEmbedded $article */
         $article = $em->getRepository(ArticleWithPeriodEmbedded::class)->findOneBy([]);
         self::assertEquals($nullPeriod, $article->getPeriod());
     }

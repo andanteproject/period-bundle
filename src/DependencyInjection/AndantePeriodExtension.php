@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class AndantePeriodExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container):void
     {
         $configuration = new BundleConfiguration();
         $config = $this->processConfiguration($configuration, $configs);

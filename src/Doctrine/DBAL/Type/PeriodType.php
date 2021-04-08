@@ -77,6 +77,9 @@ class PeriodType extends JsonType
         try {
             /** @var array|null $decodedValue */
             $decodedValue = parent::convertToPHPValue($value, $platform);
+            if (null === $decodedValue) {
+                return null;
+            }
             return self::denormalizePeriod($decodedValue, $platform->getDateTimeTzFormatString());
         } catch (Exception $e) {
             throw ConversionException::conversionFailedFormat(
