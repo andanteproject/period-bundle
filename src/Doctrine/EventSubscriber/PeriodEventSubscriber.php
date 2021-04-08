@@ -13,8 +13,6 @@ use League\Period\Period;
 
 class PeriodEventSubscriber implements EventSubscriber
 {
-    private array $entitiesWithEmbeddedPeriod = [];
-
     private PropertyAccessor $propertyAccessor;
 
     public function __construct()
@@ -30,21 +28,21 @@ class PeriodEventSubscriber implements EventSubscriber
         ];
     }
 
-    public function postLoad(LifecycleEventArgs $eventArgs):void
+    public function postLoad(LifecycleEventArgs $eventArgs): void
     {
-        $object = $eventArgs->getObject();
-        foreach (\array_keys($this->entitiesWithEmbeddedPeriod) as $entityWithEmbeddedPeriod) {
-            // Has loaded entity an embeddable Period?
-            if (is_a($object, $entityWithEmbeddedPeriod)) {
+        $entity = $eventArgs->getEntity();
+        // TODO: write an embedded recursive test case
+        $classMetadata = $eventArgs->getEntityManager()->getClassMetadata(get_class($entity));
+        // Let's search for embedded Period entities
+        foreach ($classMetadata->embeddedClasses as $propertyName => $config) {
+            if ($config['class'] === Period::class) {
                 // Yes! Let's analyze each embeddable Period property
-                foreach ($this->entitiesWithEmbeddedPeriod[$entityWithEmbeddedPeriod] as $property) {
-                    $embeddablePeriod = $this->propertyAccessor->getValue($object, $property);
-                    // Let's check if this embeddablePeriod should be null
-                    if ($this->propertyAccessor->isUninitialized($embeddablePeriod, 'boundaryType')) {
-                        // "boundaryType" property is not inizialized.
-                        // This means this embeddable Period should be NULL
-                        $this->propertyAccessor->setValue($object, $property, null);
-                    }
+                $embeddablePeriod = $this->propertyAccessor->getValue($entity, $propertyName);
+                // Let's check if this embeddablePeriod should be null
+                if ($this->propertyAccessor->isUninitialized($embeddablePeriod, 'boundaryType')) {
+                    // "boundaryType" property is not initialized.
+                    // This means this embeddable Period should be NULL
+                    $this->propertyAccessor->setValue($entity, $propertyName, null);
                 }
             }
         }
@@ -57,21 +55,8 @@ class PeriodEventSubscriber implements EventSubscriber
             return;
         }
 
-        // Let's keep track of embedded Period entities
-        foreach ($classMetadata->embeddedClasses as $propertyName => $config) {
-            if ($config['class'] === Period::class) {
-                $entityName = $classMetadata->getName();
-                if (! isset($this->entitiesWithEmbeddedPeriod[$entityName])) {
-                    $this->entitiesWithEmbeddedPeriod[$entityName] = [];
-                }
-                if (! in_array($propertyName, $this->entitiesWithEmbeddedPeriod[$entityName], true)) {
-                    $this->entitiesWithEmbeddedPeriod[$entityName][] = $propertyName;
-                }
-            }
-        }
-
         if ($classMetadata->reflClass->getName() === Period::class) {
-            // TODO: permettere mapping dinamico in base alla configurazione?
+            // TODO: allow change database mapping via configuration?
         }
     }
 }
