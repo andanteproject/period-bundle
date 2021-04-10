@@ -54,13 +54,18 @@ class PeriodType extends JsonType
      */
     public static function denormalizePeriod(array $value, string $datetimeFormat): Period
     {
-        $startDate = $value['startDate'] ?? null;
-        $endDate = $value['endDate'] ?? null;
+        $startDateStr = $value['startDate'] ?? null;
+        $endDateStr = $value['endDate'] ?? null;
         $boundaryType = $value['boundaryType'] ?? null;
 
+        /** @var \DateTimeImmutable $startDate */
+        $startDate = \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $startDateStr);
+        /** @var \DateTimeImmutable $endDate */
+        $endDate = \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $endDateStr);
+
         return Period::fromDatepoint(
-            \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $startDate),
-            \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $endDate),
+            $startDate,
+            $endDate,
             (string) $boundaryType
         );
     }

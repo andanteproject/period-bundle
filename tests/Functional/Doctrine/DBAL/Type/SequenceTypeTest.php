@@ -24,15 +24,23 @@ class SequenceTypeTest extends KernelTestCase
     public function testTypeOnDatabase(): void
     {
         $this->createSchema();
+        /** @var \DateTimeImmutable $startDate1 */
+        $startDate1 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
+        /** @var \DateTimeImmutable $endDate1 */
+        $endDate1 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
+        /** @var \DateTimeImmutable $startDate2 */
+        $startDate2 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-03 00:00:00');
+        /** @var \DateTimeImmutable $endDate2 */
+        $endDate2 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 00:00:00');
         $sequence = new Sequence(
             Period::fromDatepoint(
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00'),
+                $startDate1,
+                $endDate1,
                 Period::INCLUDE_START_EXCLUDE_END
             ),
             Period::fromDatepoint(
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-03 00:00:00'),
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 00:00:00'),
+                $startDate2,
+                $endDate2,
                 Period::EXCLUDE_ALL
             )
         );

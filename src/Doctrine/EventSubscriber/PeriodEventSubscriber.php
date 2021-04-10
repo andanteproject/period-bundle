@@ -31,7 +31,6 @@ class PeriodEventSubscriber implements EventSubscriber
     public function postLoad(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getEntity();
-        // TODO: write an embedded recursive test case
         $classMetadata = $eventArgs->getEntityManager()->getClassMetadata(get_class($entity));
         // Let's search for embedded Period entities
         foreach ($classMetadata->embeddedClasses as $propertyName => $config) {

@@ -33,11 +33,15 @@ class PeriodTypeTest extends TestCase
 
     public function conversionTests(): array
     {
+        /** @var \DateTimeImmutable $startDate */
+        $startDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
+        /** @var \DateTimeImmutable $endDate */
+        $endDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
         return [
             [
                 Period::fromDatepoint(
-                    \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
-                    \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00'),
+                    $startDate,
+                    $endDate,
                     Period::INCLUDE_START_EXCLUDE_END
                 ),
                 '{"startDate":"2020-01-01 00:00:00","endDate":"2020-01-02 00:00:00","boundaryType":"[)"}',
