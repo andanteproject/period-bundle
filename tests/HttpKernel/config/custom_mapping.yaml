@@ -1,0 +1,7 @@
+andante_period:
+  doctrine:
+    embedded_period:
+      default:
+        start_date_column_name: custom_start_date
+        end_date_column_name: custom_end_date
+        boundary_type_column_name: custom_boundary_type

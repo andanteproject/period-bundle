@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Andante\PeriodBundle\DependencyInjection;
 
+use Andante\PeriodBundle\Config\Doctrine\EmbeddedPeriod\Configuration;
 use Andante\PeriodBundle\DependencyInjection\Configuration as BundleConfiguration;
 use Andante\PeriodBundle\Doctrine\DBAL\Type\DurationType;
 use Andante\PeriodBundle\Doctrine\DBAL\Type\PeriodType;
 use Andante\PeriodBundle\Doctrine\DBAL\Type\SequenceType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -18,7 +20,10 @@ class AndantePeriodExtension extends Extension implements PrependExtensionInterf
     {
         $configuration = new BundleConfiguration();
         $config = $this->processConfiguration($configuration, $configs);
-        //TODO: continue
+        $container
+            ->setDefinition('andante_period.doctrine.embedded_period.configuration', new Definition(Configuration::class))
+            ->setFactory([Configuration::class, 'createFromArray'])
+            ->setArguments([$config['doctrine']['embedded_period']]);
     }
 
     public function prepend(ContainerBuilder $container): void

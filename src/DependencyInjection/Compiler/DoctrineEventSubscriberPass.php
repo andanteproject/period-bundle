@@ -20,6 +20,7 @@ class DoctrineEventSubscriberPass implements CompilerPassInterface
                 self::PERIOD_SUBSCRIBER_SERVICE_ID,
                 PeriodEventSubscriber::class
             )
+            ->addArgument(new Reference('andante_period.doctrine.embedded_period.configuration'))
             ->addTag('doctrine.event_subscriber');
     }
 }

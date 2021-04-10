@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Andante\PeriodBundle\Doctrine\EventSubscriber;
 
+use Andante\PeriodBundle\Config\Doctrine\EmbeddedPeriod\Configuration as EmbeddedPeriodConfiguration;
 use Andante\PeriodBundle\PropertyAccess\PropertyAccessor;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
@@ -14,10 +16,12 @@ use League\Period\Period;
 class PeriodEventSubscriber implements EventSubscriber
 {
     private PropertyAccessor $propertyAccessor;
+    private EmbeddedPeriodConfiguration $embeddedPeriodConfiguration;
 
-    public function __construct()
+    public function __construct(EmbeddedPeriodConfiguration $embeddedPeriodConfiguration)
     {
         $this->propertyAccessor = PropertyAccessor::create();
+        $this->embeddedPeriodConfiguration = $embeddedPeriodConfiguration;
     }
 
     public function getSubscribedEvents(): array
@@ -54,8 +58,30 @@ class PeriodEventSubscriber implements EventSubscriber
             return;
         }
 
-        if ($classMetadata->reflClass->getName() === Period::class) {
-            // TODO: allow change database mapping via configuration?
+        $entityName = $classMetadata->reflClass->getName();
+        if ($entityName === Period::class) {
+            $classMetadata->isEmbeddedClass = true;
+            $classMetadata->mapField([
+                'fieldName' => 'startDate',
+                'type' => Types::DATETIME_IMMUTABLE,
+                'nullable' => true,
+                'columnName' => $this->embeddedPeriodConfiguration->getStartDateColumnNameForClass($entityName),
+            ]);
+
+            $classMetadata->mapField([
+                'fieldName' => 'endDate',
+                'type' => Types::DATETIME_IMMUTABLE,
+                'nullable' => true,
+                'columnName' => $this->embeddedPeriodConfiguration->getEndDateColumnNameForClass($entityName),
+            ]);
+
+            $classMetadata->mapField([
+                'fieldName' => 'boundaryType',
+                'type' => Types::STRING,
+                'length' => 2,
+                'nullable' => true,
+                'columnName' => $this->embeddedPeriodConfiguration->getBoundaryTypeColumnNameForClass($entityName),
+            ]);
         }
     }
 }
