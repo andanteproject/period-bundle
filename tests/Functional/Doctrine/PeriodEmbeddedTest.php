@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Andante\PeriodBundle\Tests\Functional\Doctrine;
 
-use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithMiddleEntity;
+use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithMiddleEntityAndPeriodEmbedded;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriod;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriodEmbedded;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithSequence;
@@ -59,15 +59,15 @@ class PeriodEmbeddedTest extends KernelTestCase
     {
         $this->createSchema();
         $nullPeriod = null;
-        $article = new ArticleWithMiddleEntity();
+        $article = new ArticleWithMiddleEntityAndPeriodEmbedded();
         $article->getMiddleEntity()->setPeriod($nullPeriod);
         /** @var EntityManagerInterface $em */
         $em = self::$container->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
-        /** @var ArticleWithMiddleEntity $article */
-        $article = $em->getRepository(ArticleWithMiddleEntity::class)->findOneBy([]);
+        /** @var ArticleWithMiddleEntityAndPeriodEmbedded $article */
+        $article = $em->getRepository(ArticleWithMiddleEntityAndPeriodEmbedded::class)->findOneBy([]);
         self::assertEquals($nullPeriod, $article->getMiddleEntity()->getPeriod());
     }
 }

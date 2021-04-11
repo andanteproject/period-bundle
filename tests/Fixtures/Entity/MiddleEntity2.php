@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable()
  */
-class MiddleEntity
+class MiddleEntity2
 {
     /**
-     * @ORM\Embedded(class="League\Period\Period", columnPrefix="period_")
+     * @ORM\Column(type="period", nullable=true)
      */
     private ?Period $period = null;
 

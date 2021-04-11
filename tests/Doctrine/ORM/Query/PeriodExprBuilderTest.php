@@ -4,6 +4,8 @@ namespace Andante\PeriodBundle\Tests\Doctrine\ORM\Query;
 
 use Andante\PeriodBundle\Doctrine\ORM\Query\PeriodExprBuilder;
 use Andante\PeriodBundle\Exception\InvalidPeriodPathExpression;
+use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithMiddleEntityAndPeriodEmbedded;
+use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithMiddleEntityAndPeriodType;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriod;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriodEmbedded;
 use Andante\PeriodBundle\Tests\KernelTestCase;
@@ -22,7 +24,8 @@ class PeriodExprBuilderTest extends KernelTestCase
 
     /**
      * @param class-string $class
-     * @dataProvider extractionFunctionsTests
+     *
+     * @dataProvider entitiesWithPeriodPropertyArray
      */
     public function testExtractionFunctions(string $class): void
     {
@@ -56,18 +59,18 @@ class PeriodExprBuilderTest extends KernelTestCase
         ], $result);
     }
 
-    public function extractionFunctionsTests():array
+    public function entitiesWithPeriodPropertyArray(): array
     {
         return [
             [ArticleWithPeriod::class],
-            [ArticleWithPeriodEmbedded::class]
+            [ArticleWithPeriodEmbedded::class],
         ];
     }
 
     /**
      * @dataProvider isEmbeddedPeriodPropertyPathTests
      */
-    public function testIsEmbeddedPeriodPropertyPath(string $class, bool $expectedResult): void
+    public function testIsEmbeddedPeriodPropertyPath(string $class, string $propertyPath, bool $expectedResult): void
     {
         /** @var EntityManagerInterface $em */
         $em = self::$container->get('doctrine.orm.default_entity_manager');
@@ -76,14 +79,16 @@ class PeriodExprBuilderTest extends KernelTestCase
         $periodExprBuilder = PeriodExprBuilder::create($qb);
         $method = new \ReflectionMethod(PeriodExprBuilder::class, 'isEmbeddedPeriodPropertyPath');
         $method->setAccessible(true);
-        self::assertSame($expectedResult, $method->invokeArgs($periodExprBuilder, ['a.period']));
+        self::assertSame($expectedResult, $method->invokeArgs($periodExprBuilder, ['a.' . $propertyPath]));
     }
 
     public function isEmbeddedPeriodPropertyPathTests(): array
     {
         return [
-            [ArticleWithPeriodEmbedded::class, true],
-            [ArticleWithPeriod::class, false],
+            [ArticleWithPeriodEmbedded::class, 'period', true],
+            [ArticleWithPeriod::class, 'period', false],
+            [ArticleWithMiddleEntityAndPeriodEmbedded::class, 'middleEntity.period', true],
+            [ArticleWithMiddleEntityAndPeriodType::class, 'middleEntity.period', false],
         ];
     }
 

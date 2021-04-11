@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class ArticleWithMiddleEntity
+class ArticleWithMiddleEntityAndPeriodType
 {
     /**
      * @ORM\Id()
@@ -19,13 +19,13 @@ class ArticleWithMiddleEntity
     private ?int $id  = null;
 
     /**
-     * @ORM\Embedded(class="Andante\PeriodBundle\Tests\Fixtures\Entity\MiddleEntity", columnPrefix="middle_entity_")
+     * @ORM\Embedded(class="MiddleEntity2", columnPrefix="middle_entity_")
      */
-    private MiddleEntity $middleEntity;
+    private MiddleEntity2 $middleEntity;
 
     public function __construct()
     {
-        $this->middleEntity = new MiddleEntity();
+        $this->middleEntity = new MiddleEntity2();
     }
 
     public function getId(): ?int
@@ -33,12 +33,12 @@ class ArticleWithMiddleEntity
         return $this->id;
     }
 
-    public function getMiddleEntity(): MiddleEntity
+    public function getMiddleEntity(): MiddleEntity2
     {
         return $this->middleEntity;
     }
 
-    public function setMiddleEntity(MiddleEntity $middleEntity): self
+    public function setMiddleEntity(MiddleEntity2 $middleEntity): self
     {
         $this->middleEntity = $middleEntity;
         return $this;

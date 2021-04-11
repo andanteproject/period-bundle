@@ -21,7 +21,7 @@ class PeriodExprBuilder
 {
     private QueryBuilder $qb;
 
-    public function __construct(QueryBuilder $qb)
+    private function __construct(QueryBuilder $qb)
     {
         $this->qb = $qb;
     }
