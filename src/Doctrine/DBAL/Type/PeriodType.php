@@ -14,6 +14,10 @@ class PeriodType extends JsonType
 {
     public const NAME = 'period';
 
+    public const START_DATE_PROPERTY = 'startDate';
+    public const END_DATE_PROPERTY = 'endDate';
+    public const BOUNDARY_TYPE_PROPERTY = 'boundaryType';
+
     /**
      * {@inheritdoc}
      */
@@ -40,9 +44,9 @@ class PeriodType extends JsonType
     public static function normalizePeriod(Period $period, string $datetimeFormat): array
     {
         return [
-            'startDate' => $period->getStartDate()->format($datetimeFormat),
-            'endDate' => $period->getEndDate()->format($datetimeFormat),
-            'boundaryType' => $period->getBoundaryType(),
+            self::START_DATE_PROPERTY => $period->getStartDate()->format($datetimeFormat),
+            self::END_DATE_PROPERTY => $period->getEndDate()->format($datetimeFormat),
+            self::BOUNDARY_TYPE_PROPERTY => $period->getBoundaryType(),
         ];
     }
 
@@ -54,9 +58,9 @@ class PeriodType extends JsonType
      */
     public static function denormalizePeriod(array $value, string $datetimeFormat): Period
     {
-        $startDateStr = $value['startDate'] ?? null;
-        $endDateStr = $value['endDate'] ?? null;
-        $boundaryType = $value['boundaryType'] ?? null;
+        $startDateStr = $value[self::START_DATE_PROPERTY] ?? null;
+        $endDateStr = $value[self::END_DATE_PROPERTY] ?? null;
+        $boundaryType = $value[self::BOUNDARY_TYPE_PROPERTY] ?? null;
 
         /** @var \DateTimeImmutable $startDate */
         $startDate = \DateTimeImmutable::createFromFormat($datetimeFormat, (string) $startDateStr);
