@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file original="file.ext" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="1">
+                <source>Include start and exclude end</source>
+                <target>Include start and exclude end</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Include both start and end</source>
+                <target>Include both start and end</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Exclude start and include end</source>
+                <target>Exclude start and include end</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Exclude both start and end</source>
+                <target>Exclude both start and end</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Start date</source>
+                <target>Start date</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>End date</source>
+                <target>End date</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Boundary type</source>
+                <target>Boundary type</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
