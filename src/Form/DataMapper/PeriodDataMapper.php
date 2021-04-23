@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace Andante\PeriodBundle\Form\DataMapper;
 
 use Andante\PeriodBundle\Exception\InvalidArgumentException;
+use League\Period\Exception;
 use League\Period\Period;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -68,7 +69,7 @@ class PeriodDataMapper implements DataMapperInterface
         }
 
         /** @var FormInterface[] $forms */
-        $forms = iterator_to_array($forms);
+        $forms = iterator_to_array($forms); // @phpstan-ignore-line
 
         // initialize form field values
         $forms[$this->startDateChildName]->setData($viewData->getStartDate());
@@ -78,10 +79,14 @@ class PeriodDataMapper implements DataMapperInterface
         }
     }
 
+    /**
+     * @param iterable $forms
+     * @param mixed    $viewData
+     */
     public function mapFormsToData(iterable $forms, &$viewData): void
     {
         /** @var FormInterface[] $forms */
-        $forms = iterator_to_array($forms);
+        $forms = iterator_to_array($forms); // @phpstan-ignore-line
 
         $startDate = $forms[$this->startDateChildName]->getData();
         $endDate = $forms[$this->endDateChildName]->getData();
@@ -91,7 +96,10 @@ class PeriodDataMapper implements DataMapperInterface
         $viewData = null;
 
         if ($startDate instanceof \DateTimeInterface && $endDate instanceof \DateTimeInterface) {
-            $viewData = Period::fromDatepoint($startDate, $endDate, $boundaryType);
+            try {
+                $viewData = Period::fromDatepoint($startDate, $endDate, $boundaryType);
+            } catch (Exception $e) {
+            }
         }
     }
 }

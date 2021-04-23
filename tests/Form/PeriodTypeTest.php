@@ -5,15 +5,23 @@ namespace Andante\PeriodBundle\Tests\Form;
 use Andante\PeriodBundle\Form\PeriodType;
 use League\Period\Period;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Validator\Validation;
 
 class PeriodTypeTest extends TestCase
 {
+    protected function getFormFactory(): FormFactoryInterface
+    {
+        return Forms::createFormFactoryBuilder()
+            ->addExtension(new ValidatorExtension(Validation::createValidator()))
+            ->getFormFactory();
+    }
+
     public function testCreatePeriod(): void
     {
-        $factory = Forms::createFormFactoryBuilder()->getFormFactory();
-
-        $builder = $factory->createBuilder(PeriodType::class, null, [
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
             'start_date_options' => [
                 'widget' => 'single_text',
             ],
@@ -30,21 +38,44 @@ class PeriodTypeTest extends TestCase
 
         $data = $form->getData();
 
+        /** @var \DateTimeImmutable $startDate */
+        $startDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
+        /** @var \DateTimeImmutable $endDate */
+        $endDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
         self::assertEquals(
             $data,
             Period::fromDatepoint(
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
-                \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00'),
+                $startDate,
+                $endDate,
                 Period::INCLUDE_START_EXCLUDE_END
             )
         );
     }
 
+    public function testCreateInvalidPeriod(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([
+            'start' => '2020-01-02T00:00:00',
+            'end' => '2020-01-01T00:00:00',
+        ]);
+
+        $errors = $form->get('end')->getErrors();
+        self::assertCount(1, $errors);
+    }
+
     public function testCreateNull(): void
     {
-        $factory = Forms::createFormFactoryBuilder()->getFormFactory();
-
-        $builder = $factory->createBuilder(PeriodType::class, null, [
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
             'start_date_options' => [
                 'widget' => 'single_text',
             ],
@@ -63,9 +94,9 @@ class PeriodTypeTest extends TestCase
 
     public function testPreSetData(): void
     {
-        $factory = Forms::createFormFactoryBuilder()->getFormFactory();
-
+        /** @var \DateTimeImmutable $startDate */
         $startDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
+        /** @var \DateTimeImmutable $endDate */
         $endDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
         $boundaryType = Period::INCLUDE_START_EXCLUDE_END;
 
@@ -74,7 +105,7 @@ class PeriodTypeTest extends TestCase
             $endDate,
             $boundaryType
         );
-        $builder = $factory->createBuilder(
+        $builder = $this->getFormFactory()->createBuilder(
             PeriodType::class,
             $period
         );
@@ -88,9 +119,9 @@ class PeriodTypeTest extends TestCase
 
     public function testSetToNull(): void
     {
-        $factory = Forms::createFormFactoryBuilder()->getFormFactory();
-
+        /** @var \DateTimeImmutable $startDate */
         $startDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
+        /** @var \DateTimeImmutable $endDate */
         $endDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
         $boundaryType = Period::INCLUDE_START_EXCLUDE_END;
 
@@ -99,7 +130,7 @@ class PeriodTypeTest extends TestCase
             $endDate,
             $boundaryType
         );
-        $builder = $factory->createBuilder(
+        $builder = $this->getFormFactory()->createBuilder(
             PeriodType::class,
             $period
         );

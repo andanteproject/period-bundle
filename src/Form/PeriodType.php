@@ -6,12 +6,16 @@ declare(strict_types=1);
 namespace Andante\PeriodBundle\Form;
 
 use Andante\PeriodBundle\Form\DataMapper\PeriodDataMapper;
+use Andante\PeriodBundle\Form\Validator\GreaterThanOrEqualFormSibling;
+use League\Period\Exception;
 use League\Period\Period;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PeriodType extends AbstractType
 {
@@ -30,6 +34,9 @@ class PeriodType extends AbstractType
                 'label' => 'End date',
                 'input' => 'datetime_immutable',
                 'property_path' => 'endDate',
+                'constraints' => [
+                    new GreaterThanOrEqualFormSibling(['propertyPath' => $options['start_date_child_name']])
+                ],
             ],
             $options['end_date_options']
         ));
@@ -69,7 +76,10 @@ class PeriodType extends AbstractType
                     $form->get($boundaryTypeChildName)->getData() : $config->getOption('default_boundary_type');
 
                 if ($startDate instanceof \DateTimeInterface && $endDate instanceof \DateTimeInterface) {
-                    return Period::fromDatepoint($startDate, $endDate, $boundaryType);
+                    try {
+                        return Period::fromDatepoint($startDate, $endDate, $boundaryType);
+                    } catch (Exception $e) {
+                    }
                 }
 
                 return null;
