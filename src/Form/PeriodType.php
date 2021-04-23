@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace Andante\PeriodBundle\Form;
 
 use Andante\PeriodBundle\Form\DataMapper\PeriodDataMapper;
-use Andante\PeriodBundle\Form\Validator\GreaterThanOrEqualFormSibling;
+use Andante\PeriodBundle\Form\Validator\GreaterThanOrEqualFormChildren;
 use League\Period\Exception;
 use League\Period\Period;
 use Symfony\Component\Form\AbstractType;
@@ -14,8 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PeriodType extends AbstractType
 {
@@ -35,7 +33,11 @@ class PeriodType extends AbstractType
                 'input' => 'datetime_immutable',
                 'property_path' => 'endDate',
                 'constraints' => [
-                    new GreaterThanOrEqualFormSibling(['propertyPath' => $options['start_date_child_name']])
+                    new GreaterThanOrEqualFormChildren([
+                        'child' => $options['end_date_child_name'],
+                        'gteChild' => $options['start_date_child_name'],
+                        'useParent' => true,
+                    ]),
                 ],
             ],
             $options['end_date_options']
