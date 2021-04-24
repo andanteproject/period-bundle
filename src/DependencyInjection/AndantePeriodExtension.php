@@ -15,6 +15,8 @@ use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\EmbeddedPeriodStartDat
 use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\JsonPeriodBoundaryType;
 use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\JsonPeriodEndDate;
 use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\JsonPeriodStartDate;
+use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\PeriodBoundaryType;
+use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\PeriodEndDate;
 use Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions\PeriodStartDate;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -56,6 +58,9 @@ class AndantePeriodExtension extends Extension implements PrependExtensionInterf
                         EmbeddedPeriodStartDate::NAME => EmbeddedPeriodStartDate::class,
                         EmbeddedPeriodEndDate::NAME => EmbeddedPeriodEndDate::class,
                         EmbeddedPeriodBoundaryType::NAME => EmbeddedPeriodBoundaryType::class,
+                        PeriodStartDate::NAME => PeriodStartDate::class,
+                        PeriodEndDate::NAME => PeriodEndDate::class,
+                        PeriodBoundaryType::NAME => PeriodBoundaryType::class,
                     ],
                 ],
             ],

@@ -27,7 +27,7 @@ class PeriodExprBuilderTest extends KernelTestCase
      *
      * @dataProvider entitiesWithPeriodPropertyArray
      */
-    public function testExtractionFunctions(string $class): void
+    public function testExtractionFunctionsOld(string $class): void
     {
         $this->createSchema();
         $period = new Period(
@@ -49,6 +49,42 @@ class PeriodExprBuilderTest extends KernelTestCase
         $qb->select($peb->getStartDate('a.period') . ' as startDate');
         $qb->addSelect($peb->getEndDate('a.period') . ' as endDate');
         $qb->addSelect($peb->getBoundaryType('a.period') . ' as boundaryType');
+        $results = $qb->getQuery()->getArrayResult();
+        $result = \reset($results);
+
+        self::assertEquals([
+            'startDate' => '2020-01-01 00:00:00',
+            'endDate' => '2020-01-10 00:00:00',
+            'boundaryType' => '[)',
+        ], $result);
+    }
+
+    /**
+     * @param class-string $class
+     *
+     * @dataProvider entitiesWithPeriodPropertyArray
+     */
+    public function testExtractionFunctions(string $class): void
+    {
+        $this->createSchema();
+        $period = new Period(
+            \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00'),
+            \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-10 00:00:00'),
+            Period::INCLUDE_START_EXCLUDE_END
+        );
+        $article = new $class($period);
+        /** @var EntityManagerInterface $em */
+        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em->persist($article);
+        $em->flush();
+        $em->clear();
+
+        /** @var EntityRepository<mixed> $entityRepository */
+        $entityRepository = $em->getRepository($class);
+        $qb = $entityRepository->createQueryBuilder('a');
+        $qb->select('PERIOD_START_DATE(a.period) as startDate');
+        $qb->addSelect('PERIOD_END_DATE(a.period) as endDate');
+        $qb->addSelect('PERIOD_BOUNDARY_TYPE(a.period) as boundaryType');
         $results = $qb->getQuery()->getArrayResult();
         $result = \reset($results);
 
