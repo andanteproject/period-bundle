@@ -11,7 +11,7 @@
 ![PhpStan](https://img.shields.io/badge/PHPStan-Level%208-syccess?style=flat&logo=php)
 
 A Symfony Bundle to integrate [thephpleague/period](https://period.thephpleague.com)
-into [Doctrine](https://github.com/doctrine/DoctrineBundle) and [Symfony Form](https://github.com/symfony/form). 🕰
+into [Doctrine](https://github.com/doctrine/DoctrineBundle) and [Symfony Form](https://github.com/symfony/form).
 
 ## Requirements
 
