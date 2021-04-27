@@ -53,7 +53,7 @@ register it by yourself.
 ## Doctrine Mapping
 
 The bundle is going to register `period`, `duration` and `sequence` doctrine types to allow you to map `Period`
-, `Duration` and `Sequrnce` objects to the database.
+, `Duration` and `Sequence` objects to the database.
 
 ```php
 <?php
