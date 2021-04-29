@@ -281,6 +281,18 @@ $builder->add('period', PeriodType::class, [
 ]);
 ```
 
+#### allow_null
+
+**type**: `bool` **default**: `true`
+Additional options to be used for the *boundaryType* form child.
+
+```php
+$builder->add('period', PeriodType::class, [
+    'allow_null' => false,
+    // Allow to trigger an error when your Period property is not nullable.
+]);
+```
+
 ## Configuration (completely optional)
 
 This bundle is build thinking how to save you time and follow best practices as close as possible.
