@@ -91,7 +91,8 @@ class PeriodType extends AbstractType
             'end_date_options' => [],
             'boundary_type_child_name' => 'boundary',
             'boundary_type_options' => [],
-            'allow_null' => true
+            'allow_null' => true,
+            'error_bubbling' => false
         ]);
 
         $resolver->setAllowedValues('default_boundary_type', [

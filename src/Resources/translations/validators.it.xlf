@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file original="file.ext" source-language="it" datatype="plaintext">
+        <body>
+            <trans-unit id="invalid_message_period.invalid_start_date">
+                <source>Start date should be valid. {{ startDate }} is not a valid date.</source>
+                <target>La data di inizio dovrebbe essere valida. {{ startDate }} non è una data valida.</target>
+            </trans-unit>
+            <trans-unit id="invalid_message_period.invalid_end_date">
+                <source>End date should be valid. {{ endDate }} is not a valid date.</source>
+                <target>La data di fine dovrebbe essere valida. {{ endDate }} non è una data valida.</target>
+            </trans-unit>
+            <trans-unit id="invalid_message_period.invalid_date_range">
+                <source>Start date should be greater or equals then the end date.</source>
+                <target>La data di inizio dovrebbe essere successiva o uguale della data di fine.</target>
+            </trans-unit>
+            <trans-unit id="invalid_message_period.invalid">
+                <source>Invalid Period.</source>
+                <target>Periodo non valido.</target>
+            </trans-unit>
+            <trans-unit id="invalid_message_period.required">
+                <source>A valid Period is required.</source>
+                <target>Un periodo è obbligatorio.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
