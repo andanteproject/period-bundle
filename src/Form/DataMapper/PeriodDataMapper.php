@@ -126,7 +126,7 @@ class PeriodDataMapper implements DataMapperInterface
         if ($startDate instanceof \DateTimeInterface && $endDate instanceof \DateTimeInterface) {
             if ($startDate > $endDate) {
                 $failure = new TransformationFailedException('Start date should be greater or equals then the end date.');
-                $failure->setInvalidMessage('Start date should be greater or equals then the end date', [
+                $failure->setInvalidMessage('Start date should be greater or equals then the end date.', [
                     '{{ startDate }}' => json_encode($startDate),
                     '{{ endDate }}' => json_encode($endDate),
                 ]);
