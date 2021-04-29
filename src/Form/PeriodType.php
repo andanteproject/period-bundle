@@ -21,7 +21,7 @@ class PeriodType extends AbstractType
     {
         $builder->add($options['start_date_child_name'], $options['start_date_form_type'], \array_merge_recursive(
             [
-                'label' => 'Start date',
+                'label' => 'Start',
                 'input' => 'datetime_immutable',
                 'property_path' => 'startDate',
             ],
@@ -29,16 +29,9 @@ class PeriodType extends AbstractType
         ));
         $builder->add($options['end_date_child_name'], $options['end_date_form_type'], \array_merge_recursive(
             [
-                'label' => 'End date',
+                'label' => 'End',
                 'input' => 'datetime_immutable',
-                'property_path' => 'endDate',
-                'constraints' => [
-                    new GreaterThanOrEqualFormChildren([
-                        'child' => $options['end_date_child_name'],
-                        'gteChild' => $options['start_date_child_name'],
-                        'useParent' => true,
-                    ]),
-                ],
+                'property_path' => 'endDate'
             ],
             $options['end_date_options']
         ));
@@ -56,7 +49,8 @@ class PeriodType extends AbstractType
                 $options['default_boundary_type'],
                 $options['start_date_child_name'],
                 $options['end_date_child_name'],
-                $options['boundary_type_child_name']
+                $options['boundary_type_child_name'],
+                $options['allow_null']
             )
         );
     }
@@ -97,6 +91,7 @@ class PeriodType extends AbstractType
             'end_date_options' => [],
             'boundary_type_child_name' => 'boundary',
             'boundary_type_options' => [],
+            'allow_null' => true
         ]);
 
         $resolver->setAllowedValues('default_boundary_type', [
@@ -113,5 +108,6 @@ class PeriodType extends AbstractType
         $resolver->setAllowedTypes('start_date_child_name', 'string');
         $resolver->setAllowedTypes('end_date_child_name', 'string');
         $resolver->setAllowedTypes('boundary_type_child_name', 'string');
+        $resolver->setAllowedTypes('allow_null', 'bool');
     }
 }
