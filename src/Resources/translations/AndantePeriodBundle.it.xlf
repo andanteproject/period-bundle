@@ -19,16 +19,36 @@
                 <target>Escludi sia inizio che fine</target>
             </trans-unit>
             <trans-unit id="5">
-                <source>Start date</source>
-                <target>Data di inizio</target>
+                <source>Start</source>
+                <target>Inizio</target>
             </trans-unit>
             <trans-unit id="6">
-                <source>End date</source>
-                <target>Data di fine</target>
+                <source>End</source>
+                <target>Fine</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>Boundary type</source>
                 <target>Estremità</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Start date should be valid. {{ startDate }} is not a valid date.</source>
+                <target>Start date should be valid. {{ startDate }} is not a valid date.</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>End date should be valid. {{ endDate }} is not a valid date.</source>
+                <target>End date should be valid. {{ endDate }} is not a valid date.</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Start date should be greater or equals then the end date.</source>
+                <target>Start date should be greater or equals then the end date.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Invalid Period.</source>
+                <target>Invalid Period.</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>A valid Period is required.</source>
+                <target>A valid Period is required.</target>
             </trans-unit>
         </body>
     </file>
