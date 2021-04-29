@@ -69,7 +69,7 @@ class PeriodTypeTest extends TestCase
             'end' => '2020-01-01T00:00:00',
         ]);
 
-        $errors = $form->get('end')->getErrors();
+        $errors = $form->getErrors();
         self::assertCount(1, $errors);
     }
 
@@ -142,5 +142,104 @@ class PeriodTypeTest extends TestCase
         self::assertNull($form->get('start')->getData());
         self::assertNull($form->get('end')->getData());
         self::assertNull($form->getData());
+    }
+
+    public function testSetToInvalidPeriod(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([
+            'start' => '2020-01-02T00:00:00',
+            'end' => '2020-01-01T00:00:00',
+        ]);
+
+        $errors = $form->getErrors();
+        self::assertCount(1, $errors);
+    }
+
+    public function testSetToInvalidPeriodWithOnlyStart(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([
+            'start' => '2020-01-02T00:00:00',
+        ]);
+
+        $errors = $form->getErrors();
+        self::assertCount(1, $errors);
+    }
+
+    public function testSetToInvalidPeriodWithOnlyEnd(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([
+            'end' => '2020-01-02T00:00:00',
+        ]);
+
+        $errors = $form->getErrors();
+        self::assertCount(1, $errors);
+    }
+
+    public function testSetToInvalidPeriodWithAllowNullOptionSetToFalse(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'allow_null' => false,
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([]);
+
+        $errors = $form->getErrors();
+        self::assertCount(1, $errors);
+    }
+
+    public function testSetToInvalidPeriodWithAllowNullOptionSetToTrue(): void
+    {
+        $builder = $this->getFormFactory()->createBuilder(PeriodType::class, null, [
+            'start_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'end_date_options' => [
+                'widget' => 'single_text',
+            ],
+            'allow_null' => true,
+        ]);
+        $form = $builder->getForm();
+
+        $form->submit([]);
+
+        $errors = $form->getErrors();
+        self::assertCount(0, $errors);
     }
 }
