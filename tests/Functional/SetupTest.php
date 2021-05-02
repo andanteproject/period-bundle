@@ -46,6 +46,7 @@ class SetupTest extends KernelTestCase
             $r = new \ReflectionProperty($evm, 'subscribers');
             $r->setAccessible(true);
             $subscribers = $r->getValue($evm);
+
             $serviceIdRegistered = \in_array(
                 DoctrineEventSubscriberPass::PERIOD_SUBSCRIBER_SERVICE_ID,
                 $subscribers,
@@ -55,7 +56,14 @@ class SetupTest extends KernelTestCase
                 bool $carry,
                 $service
             ) => $carry ? $carry : $service instanceof PeriodEventSubscriber, false);
-            self::assertTrue($serviceIdRegistered || $serviceRegistered);
+            /** @var array<object> $listeners */
+            $listeners = $evm->getListeners()['loadClassMetadata'] ?? [];
+            $listenerRegistered = \array_reduce($listeners, static fn (
+                bool $carry,
+                $service
+            ) => $carry ? $carry : $service instanceof PeriodEventSubscriber, false);
+
+            self::assertTrue($serviceIdRegistered || $serviceRegistered || $listenerRegistered);
         }
     }
 }

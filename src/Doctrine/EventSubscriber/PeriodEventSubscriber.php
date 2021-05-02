@@ -12,8 +12,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use League\Period\Period;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
-class PeriodEventSubscriber implements EventSubscriber
+class PeriodEventSubscriber implements EventSubscriber, EventSubscriberInterface
 {
     private PropertyAccessor $propertyAccessor;
     private EmbeddedPeriodConfiguration $embeddedPeriodConfiguration;
