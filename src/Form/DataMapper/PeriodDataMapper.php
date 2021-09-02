@@ -59,8 +59,9 @@ class PeriodDataMapper implements DataMapperInterface
 
     /**
      * @param Period|null $viewData
+     * @param FormInterface[]|\Traversable $forms
      */
-    public function mapDataToForms($viewData, iterable $forms): void
+    public function mapDataToForms($viewData, $forms): void
     {
         // there is no data yet, so nothing to prepopulate
         if (null === $viewData) {
@@ -73,7 +74,7 @@ class PeriodDataMapper implements DataMapperInterface
         }
 
         /** @var FormInterface[] $forms */
-        $forms = iterator_to_array($forms); // @phpstan-ignore-line
+        $forms = iterator_to_array($forms);
 
         // initialize form field values
         $forms[$this->startDateChildName]->setData($viewData->getStartDate());
@@ -84,13 +85,13 @@ class PeriodDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param iterable $forms
+     * @param FormInterface[]|\Traversable $forms
      * @param mixed    $viewData
      */
-    public function mapFormsToData(iterable $forms, &$viewData): void
+    public function mapFormsToData($forms, &$viewData): void
     {
         /** @var FormInterface[] $forms */
-        $forms = iterator_to_array($forms); // @phpstan-ignore-line
+        $forms = iterator_to_array($forms);
 
         $startDate = $forms[$this->startDateChildName]->getData();
         $endDate = $forms[$this->endDateChildName]->getData();

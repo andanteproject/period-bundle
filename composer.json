@@ -54,7 +54,8 @@
         "symfony/yaml": "^5.2",
         "phpunit/phpunit": "^9.5",
         "ext-json": "*",
-        "doctrine/orm": "^2.8"
+        "doctrine/orm": "^2.8",
+        "doctrine/cache": "^2.1"
     },
     "autoload": {
         "psr-4": {
