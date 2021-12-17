@@ -37,4 +37,9 @@ class DurationType extends DateIntervalType
     {
         return self::NAME;
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }

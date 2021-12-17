@@ -68,4 +68,9 @@ class SequenceType extends JsonType
     {
         return self::NAME;
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }
