@@ -68,7 +68,7 @@ class SequenceTypeTest extends TestCase
         $this->expectException(ConversionException::class);
         $invalidValue = 'foo';
         $this->expectDeprecationMessage(\sprintf(
-            "Could not convert PHP value '%s' of type 'string' to type 'sequence'. Expected one of the following types: null, %s",
+            "Could not convert PHP value '%s' to type sequence. Expected one of the following types: null, %s",
             $invalidValue,
             Sequence::class
         ));
@@ -81,7 +81,7 @@ class SequenceTypeTest extends TestCase
         $this->expectException(ConversionException::class);
         $invalidValue = 'foo';
         $this->expectDeprecationMessage(\sprintf(
-            "Could not convert PHP value '%s' of type 'string' to type 'sequence'. Expected one of the following types: null, %s",
+            "Could not convert PHP value '%s' to type sequence. Expected one of the following types: null, %s",
             $invalidValue,
             Sequence::class
         ));

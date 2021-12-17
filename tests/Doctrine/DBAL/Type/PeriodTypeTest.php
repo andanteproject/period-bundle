@@ -56,7 +56,7 @@ class PeriodTypeTest extends TestCase
         $this->expectException(ConversionException::class);
         $invalidValue = 'foo';
         $this->expectDeprecationMessage(\sprintf(
-            "Could not convert PHP value '%s' of type 'string' to type 'period'. Expected one of the following types: null, %s",
+            "Could not convert PHP value '%s' to type period. Expected one of the following types: null, %s",
             $invalidValue,
             Period::class
         ));
@@ -69,7 +69,7 @@ class PeriodTypeTest extends TestCase
         $this->expectException(ConversionException::class);
         $invalidValue = 'foo';
         $this->expectDeprecationMessage(\sprintf(
-            "Could not convert PHP value '%s' of type 'string' to type 'period'. Expected one of the following types: null, %s",
+            "Could not convert PHP value '%s' to type period. Expected one of the following types: null, %s",
             $invalidValue,
             Period::class
         ));
