@@ -6,8 +6,8 @@
 
 [![Latest Version](https://img.shields.io/github/release/andanteproject/period-bundle.svg)](https://github.com/andanteproject/period-bundle/releases)
 ![Github actions](https://github.com/andanteproject/period-bundle/actions/workflows/workflow.yml/badge.svg?branch=main)
-![Framework](https://img.shields.io/badge/Symfony-4.x|5.x-informational?Style=flat&logo=symfony)
-![Php7](https://img.shields.io/badge/PHP-%207.4|8.x-informational?style=flat&logo=php)
+![Framework](https://img.shields.io/badge/Symfony-5.4|6.x-informational?Style=flat&logo=symfony)
+![Php7](https://img.shields.io/badge/PHP-%208.x-informational?style=flat&logo=php)
 ![PhpStan](https://img.shields.io/badge/PHPStan-Level%208-syccess?style=flat&logo=php)
 
 A Symfony Bundle to integrate [thephpleague/period](https://period.thephpleague.com)
@@ -15,7 +15,7 @@ into [Doctrine](https://github.com/doctrine/DoctrineBundle) and [Symfony Form](h
 
 ## Requirements
 
-Symfony 4.x-5.x and PHP 7.4.
+Symfony 5.4-6.x and PHP 8.0.
 
 ## Install
 
