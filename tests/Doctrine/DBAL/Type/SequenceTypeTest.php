@@ -3,9 +3,8 @@
 namespace Andante\PeriodBundle\Tests\Doctrine\DBAL\Type;
 
 use Andante\PeriodBundle\Doctrine\DBAL\Type\SequenceType;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\Type;
 use League\Period\Period;
 use League\Period\Sequence;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +17,7 @@ class SequenceTypeTest extends TestCase
     public function testConvertToDatabaseValue(?Sequence $period, ?string $dbValue): void
     {
         $sequenceType = new SequenceType();
-        self::assertSame($dbValue, $sequenceType->convertToDatabaseValue($period, new MySqlPlatform()));
+        self::assertSame($dbValue, $sequenceType->convertToDatabaseValue($period, new MySQLPlatform()));
     }
 
     /**
@@ -27,7 +26,7 @@ class SequenceTypeTest extends TestCase
     public function testConvertToPHPValue(?Sequence $period, ?string $dbValue): void
     {
         $sequenceType = new SequenceType();
-        self::assertEquals($period, $sequenceType->convertToPHPValue($dbValue, new MySqlPlatform()));
+        self::assertEquals($period, $sequenceType->convertToPHPValue($dbValue, new MySQLPlatform()));
     }
 
     public function conversionTests(): array
@@ -40,6 +39,7 @@ class SequenceTypeTest extends TestCase
         $startDate2 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-03 00:00:00');
         /** @var \DateTimeImmutable $endDate2 */
         $endDate2 = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 00:00:00');
+
         return [
             [
                 new Sequence(
@@ -58,8 +58,8 @@ class SequenceTypeTest extends TestCase
             ],
             [
                 null,
-                null
-            ]
+                null,
+            ],
         ];
     }
 
@@ -73,7 +73,7 @@ class SequenceTypeTest extends TestCase
             Sequence::class
         ));
         $durationType = new SequenceType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 
     public function testShouldRaiseExceptionToPHPValue(): void
@@ -86,6 +86,6 @@ class SequenceTypeTest extends TestCase
             Sequence::class
         ));
         $durationType = new SequenceType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 }

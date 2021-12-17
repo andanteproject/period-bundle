@@ -24,7 +24,7 @@ class SetupTest extends KernelTestCase
     public function testDoctrineTypeSetup(): void
     {
         /** @var array $types */
-        $types = self::$container->getParameter('doctrine.dbal.connection_factory.types');
+        $types = self::getContainer()->getParameter('doctrine.dbal.connection_factory.types');
 
         self::assertArrayHasKey(DurationType::NAME, $types);
         self::assertSame(DurationType::class, $types[DurationType::NAME]['class']);
@@ -39,7 +39,7 @@ class SetupTest extends KernelTestCase
     public function testSubscriberSetup(): void
     {
         /** @var ManagerRegistry $managerRegistry */
-        $managerRegistry = self::$container->get('doctrine');
+        $managerRegistry = self::getContainer()->get('doctrine');
         /** @var EntityManagerInterface $em */
         foreach ($managerRegistry->getManagers() as $em) {
             $evm = $em->getEventManager();

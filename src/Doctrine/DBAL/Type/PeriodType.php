@@ -23,7 +23,7 @@ class PeriodType extends JsonType
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return $value;
         }
 
@@ -34,11 +34,7 @@ class PeriodType extends JsonType
             );
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', Period::class]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', Period::class]);
     }
 
     public static function normalizePeriod(Period $period, string $datetimeFormat): array
@@ -51,9 +47,6 @@ class PeriodType extends JsonType
     }
 
     /**
-     * @param array  $value
-     * @param string $datetimeFormat
-     *
      * @throws Exception
      */
     public static function denormalizePeriod(array $value, string $datetimeFormat): Period
@@ -79,7 +72,7 @@ class PeriodType extends JsonType
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Period
     {
-        if ($value === null || $value instanceof Period) {
+        if (null === $value || $value instanceof Period) {
             return $value;
         }
 
@@ -89,14 +82,10 @@ class PeriodType extends JsonType
             if (null === $decodedValue) {
                 return null;
             }
+
             return self::denormalizePeriod($decodedValue, $platform->getDateTimeTzFormatString());
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeTzFormatString(),
-                $e
-            );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeTzFormatString(), $e);
         }
     }
 

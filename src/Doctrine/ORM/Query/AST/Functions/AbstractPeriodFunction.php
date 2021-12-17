@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions;
 
 use Andante\PeriodBundle\Exception\ParseException;
@@ -49,20 +48,14 @@ abstract class AbstractPeriodFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
 
         if (null === $this->fieldPathExpression->field) {
-            throw new ParseException(\sprintf(
-                '"%s" DQL function must be used on a single field path',
-                static::NAME
-            ));
+            throw new ParseException(\sprintf('"%s" DQL function must be used on a single field path', static::NAME));
         }
 
         $query = $this->getQueryFromParser($parser);
         $dql = $this->getQueryFromParser($parser)->getDQL();
 
         if (null === $dql) {
-            throw new ParseException(\sprintf(
-                'Cannot read DQL while using "%1$s" DQL function. Please use EMBEDDED_%1$s and JSON_%1$s functions based on your mapping instead.',
-                static::NAME
-            ));
+            throw new ParseException(\sprintf('Cannot read DQL while using "%1$s" DQL function. Please use EMBEDDED_%1$s and JSON_%1$s functions based on your mapping instead.', static::NAME));
         }
 
         $entity = $this->getEntityClassByAlias(
@@ -70,14 +63,13 @@ abstract class AbstractPeriodFunction extends FunctionNode
             $this->fieldPathExpression->identificationVariable
         );
 
-
         if ($this->isEmbeddedPeriodPropertyPath(
             $query->getEntityManager()->getClassMetadata($entity),
             $this->fieldPathExpression->field
         )) {
             // It's embedded, we need to change fieldPathExpression in order to let Doctrine work in the right way
             $this->embedded = true;
-            $this->fieldPathExpression->field .= sprintf(".%s", $this->getPropertyName());
+            $this->fieldPathExpression->field .= \sprintf('.%s', $this->getPropertyName());
         }
     }
 
@@ -98,7 +90,7 @@ abstract class AbstractPeriodFunction extends FunctionNode
     {
         return
             isset($classMetadata->embeddedClasses[$field]) &&
-            $classMetadata->embeddedClasses[$field]['class'] === Period::class;
+            Period::class === $classMetadata->embeddedClasses[$field]['class'];
     }
 
     private function getEntityClassByAlias(string $dql, string $identificationVariable): string
@@ -112,13 +104,10 @@ abstract class AbstractPeriodFunction extends FunctionNode
             $dql,
             $matches
         );
-        if (! isset($matches['entity']) || ! \is_string($matches['entity'])) {
-            throw new ParseException(\sprintf(
-                'Cannot auto identify automatically which DQL function to use to access %1$s period property. Please use EMBEDDED_%2$s and JSON_%2$s functions based on your mapping instead.',
-                $this->getPropertyName(),
-                static::NAME
-            ));
+        if (!isset($matches['entity']) || !\is_string($matches['entity'])) {
+            throw new ParseException(\sprintf('Cannot auto identify automatically which DQL function to use to access %1$s period property. Please use EMBEDDED_%2$s and JSON_%2$s functions based on your mapping instead.', $this->getPropertyName(), static::NAME));
         }
+
         return $matches['entity'];
     }
 }

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Form;
 
 use League\Period\Period;
@@ -24,10 +23,9 @@ class BoundaryTypeChoiceType extends AbstractType
             'empty_data' => Period::INCLUDE_START_EXCLUDE_END,
             'multiple' => false,
             'expanded' => false,
-            'choice_translation_domain' => 'AndantePeriodBundle'
+            'choice_translation_domain' => 'AndantePeriodBundle',
         ]);
     }
-
 
     public function getParent(): string
     {

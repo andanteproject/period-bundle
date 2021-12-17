@@ -17,7 +17,7 @@ class ArticleWithPeriod
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="period", nullable=true)
@@ -42,6 +42,7 @@ class ArticleWithPeriod
     public function setPeriod(?Period $period): self
     {
         $this->period = $period;
+
         return $this;
     }
 }

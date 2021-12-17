@@ -17,7 +17,7 @@ class ArticleWithNotNullablePeriod
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     private string $title = '';
 
@@ -44,6 +44,7 @@ class ArticleWithNotNullablePeriod
     public function setPeriod(Period $period): self
     {
         $this->period = $period;
+
         return $this;
     }
 
@@ -55,6 +56,7 @@ class ArticleWithNotNullablePeriod
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 }

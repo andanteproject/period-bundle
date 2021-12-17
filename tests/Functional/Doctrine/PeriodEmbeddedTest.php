@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Andante\PeriodBundle\Tests\Functional\Doctrine;
 
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithMiddleEntityAndPeriodEmbedded;
-use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriod;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriodEmbedded;
-use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithSequence;
 use Andante\PeriodBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Period\Period;
-use League\Period\Sequence;
 
 class PeriodEmbeddedTest extends KernelTestCase
 {
@@ -31,7 +28,7 @@ class PeriodEmbeddedTest extends KernelTestCase
         );
         $article = new ArticleWithPeriodEmbedded($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
@@ -46,7 +43,7 @@ class PeriodEmbeddedTest extends KernelTestCase
         $nullPeriod = null;
         $article = new ArticleWithPeriodEmbedded($nullPeriod);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
@@ -62,7 +59,7 @@ class PeriodEmbeddedTest extends KernelTestCase
         $article = new ArticleWithMiddleEntityAndPeriodEmbedded();
         $article->getMiddleEntity()->setPeriod($nullPeriod);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();

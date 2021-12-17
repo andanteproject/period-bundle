@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Config\Doctrine\EmbeddedPeriod;
 
 class EntityConfiguration
@@ -19,6 +18,7 @@ class EntityConfiguration
     public function setStartDateColumnName(?string $startDateColumnName): self
     {
         $this->startDateColumnName = $startDateColumnName;
+
         return $this;
     }
 
@@ -30,6 +30,7 @@ class EntityConfiguration
     public function setEndDateColumnName(?string $endDateColumnName): self
     {
         $this->endDateColumnName = $endDateColumnName;
+
         return $this;
     }
 
@@ -41,6 +42,7 @@ class EntityConfiguration
     public function setBoundaryTypeColumnName(?string $boundaryTypeColumnName): self
     {
         $this->boundaryTypeColumnName = $boundaryTypeColumnName;
+
         return $this;
     }
 

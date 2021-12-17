@@ -37,7 +37,7 @@ class PeriodExprBuilderTest extends KernelTestCase
         );
         $article = new $class($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
@@ -46,9 +46,9 @@ class PeriodExprBuilderTest extends KernelTestCase
         $entityRepository = $em->getRepository($class);
         $qb = $entityRepository->createQueryBuilder('a');
         $peb = PeriodExprBuilder::create($qb);
-        $qb->select($peb->getStartDate('a.period') . ' as startDate');
-        $qb->addSelect($peb->getEndDate('a.period') . ' as endDate');
-        $qb->addSelect($peb->getBoundaryType('a.period') . ' as boundaryType');
+        $qb->select($peb->getStartDate('a.period').' as startDate');
+        $qb->addSelect($peb->getEndDate('a.period').' as endDate');
+        $qb->addSelect($peb->getBoundaryType('a.period').' as boundaryType');
         $results = $qb->getQuery()->getArrayResult();
         $result = \reset($results);
 
@@ -74,7 +74,7 @@ class PeriodExprBuilderTest extends KernelTestCase
         );
         $article = new $class($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
@@ -109,13 +109,13 @@ class PeriodExprBuilderTest extends KernelTestCase
     public function testIsEmbeddedPeriodPropertyPath(string $class, string $propertyPath, bool $expectedResult): void
     {
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $qb = new QueryBuilder($em);
         $qb->from($class, 'a');
         $periodExprBuilder = PeriodExprBuilder::create($qb);
         $method = new \ReflectionMethod(PeriodExprBuilder::class, 'isEmbeddedPeriodPropertyPath');
         $method->setAccessible(true);
-        self::assertSame($expectedResult, $method->invokeArgs($periodExprBuilder, ['a.' . $propertyPath]));
+        self::assertSame($expectedResult, $method->invokeArgs($periodExprBuilder, ['a.'.$propertyPath]));
     }
 
     public function isEmbeddedPeriodPropertyPathTests(): array
@@ -134,7 +134,7 @@ class PeriodExprBuilderTest extends KernelTestCase
     public function testIsEmbeddedPeriodWrongPropertyPath(string $path): void
     {
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $qb = new QueryBuilder($em);
         $qb->from(ArticleWithPeriod::class, 'a');
         $periodExprBuilder = PeriodExprBuilder::create($qb);
@@ -143,7 +143,6 @@ class PeriodExprBuilderTest extends KernelTestCase
         $this->expectException(InvalidPeriodPathExpression::class);
         $method->invokeArgs($periodExprBuilder, [$path]);
     }
-
 
     public function isEmbeddedPeriodWrongPropertyPathTests(): array
     {

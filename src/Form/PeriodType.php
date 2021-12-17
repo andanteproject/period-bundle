@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Form;
 
 use Andante\PeriodBundle\Form\DataMapper\PeriodDataMapper;
-use Andante\PeriodBundle\Form\Validator\GreaterThanOrEqualFormChildren;
 use League\Period\Exception;
 use League\Period\Period;
 use Symfony\Component\Form\AbstractType;
@@ -31,7 +29,7 @@ class PeriodType extends AbstractType
             [
                 'label' => 'End',
                 'input' => 'datetime_immutable',
-                'property_path' => 'endDate'
+                'property_path' => 'endDate',
             ],
             $options['end_date_options']
         ));
@@ -54,7 +52,6 @@ class PeriodType extends AbstractType
             )
         );
     }
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -92,7 +89,7 @@ class PeriodType extends AbstractType
             'boundary_type_child_name' => 'boundary',
             'boundary_type_options' => [],
             'allow_null' => true,
-            'error_bubbling' => false
+            'error_bubbling' => false,
         ]);
 
         $resolver->setAllowedValues('default_boundary_type', [

@@ -3,7 +3,7 @@
 namespace Andante\PeriodBundle\Tests\Doctrine\DBAL\Type;
 
 use Andante\PeriodBundle\Doctrine\DBAL\Type\DurationType;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use League\Period\Duration;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +16,7 @@ class DurationTypeTest extends TestCase
     public function testConvertToDatabaseValue(?Duration $duration, ?string $dbValue): void
     {
         $durationType = new DurationType();
-        self::assertSame($dbValue, $durationType->convertToDatabaseValue($duration, new MySqlPlatform()));
+        self::assertSame($dbValue, $durationType->convertToDatabaseValue($duration, new MySQLPlatform()));
     }
 
     public function conversionTests(): array
@@ -39,7 +39,7 @@ class DurationTypeTest extends TestCase
     public function testConvertToPHPValue(?Duration $duration, ?string $dbValue): void
     {
         $durationType = new DurationType();
-        self::assertEquals($duration, $durationType->convertToPHPValue($dbValue, new MySqlPlatform()));
+        self::assertEquals($duration, $durationType->convertToPHPValue($dbValue, new MySQLPlatform()));
     }
 
     public function testShouldRaiseExceptionToDatabaseValue(): void
@@ -52,7 +52,7 @@ class DurationTypeTest extends TestCase
             Duration::class
         ));
         $durationType = new DurationType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 
     public function testShouldRaiseExceptionToPHPValue(): void
@@ -65,6 +65,6 @@ class DurationTypeTest extends TestCase
             Duration::class
         ));
         $durationType = new DurationType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 }

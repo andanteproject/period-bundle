@@ -16,7 +16,7 @@ class ArticleWithMiddleEntityAndPeriodEmbedded
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Embedded(class="MiddleEntity1", columnPrefix="middle_entity_")
@@ -41,6 +41,7 @@ class ArticleWithMiddleEntityAndPeriodEmbedded
     public function setMiddleEntity(MiddleEntity1 $middleEntity): self
     {
         $this->middleEntity = $middleEntity;
+
         return $this;
     }
 }

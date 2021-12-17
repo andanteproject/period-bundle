@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Andante\PeriodBundle\Tests\Functional\Doctrine\DBAL\Type;
 
-use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithDuration;
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriod;
 use Andante\PeriodBundle\Tests\KernelTestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Period\Duration;
 use League\Period\Period;
 
 class PeriodTypeTest extends KernelTestCase
@@ -33,7 +31,7 @@ class PeriodTypeTest extends KernelTestCase
         );
         $article = new ArticleWithPeriod($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();

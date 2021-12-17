@@ -20,7 +20,7 @@ class SequenceType extends JsonType
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
@@ -37,11 +37,7 @@ class SequenceType extends JsonType
             );
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', Sequence::class]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', Sequence::class]);
     }
 
     /**
@@ -49,7 +45,7 @@ class SequenceType extends JsonType
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Sequence
     {
-        if ($value === null || $value instanceof Sequence) {
+        if (null === $value || $value instanceof Sequence) {
             return $value;
         }
 
@@ -64,11 +60,7 @@ class SequenceType extends JsonType
                 )
             );
         } catch (Exception $e) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeTzFormatString()
-            );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeTzFormatString());
         }
     }
 

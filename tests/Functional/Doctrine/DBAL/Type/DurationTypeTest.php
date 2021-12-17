@@ -24,7 +24,7 @@ class DurationTypeTest extends KernelTestCase
         $duration = Duration::createFromDateString('1 hour');
         $article = new ArticleWithDuration($duration);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();

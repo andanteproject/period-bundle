@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Doctrine\ORM\Query;
 
 use Andante\PeriodBundle\Doctrine\DBAL\Type\PeriodType;
@@ -65,7 +64,7 @@ class PeriodExprBuilder
     {
         $matches = [];
         if (\preg_match(
-            '/(?P<alias>' . \implode('|', $this->qb->getAllAliases()) . ')\./',
+            '/(?P<alias>'.\implode('|', $this->qb->getAllAliases()).')\./',
             $singlePropertyPath,
             $matches
         )) {
@@ -74,26 +73,18 @@ class PeriodExprBuilder
                 $rootEntity = $this->getEntityForAlias($alias);
                 if (null !== $rootEntity) {
                     $rootClassMetadata = $this->qb->getEntityManager()->getClassMetadata($rootEntity);
-                    $fieldName = \preg_replace('/^' . $alias . '\./', '', $singlePropertyPath);
+                    $fieldName = \preg_replace('/^'.$alias.'\./', '', $singlePropertyPath);
                     if (\is_string($fieldName)) {
-                        if (isset($rootClassMetadata->embeddedClasses[$fieldName]) && $rootClassMetadata->embeddedClasses[$fieldName]['class'] === Period::class) {
+                        if (isset($rootClassMetadata->embeddedClasses[$fieldName]) && Period::class === $rootClassMetadata->embeddedClasses[$fieldName]['class']) {
                             return true;
                         }
                         try {
                             $fieldMapping = $rootClassMetadata->getFieldMapping($fieldName);
-                            if (isset($fieldMapping['type']) && $fieldMapping['type'] === PeriodType::NAME) {
+                            if (isset($fieldMapping['type']) && PeriodType::NAME === $fieldMapping['type']) {
                                 return false;
                             }
                         } catch (MappingException $e) {
-                            throw new InvalidPeriodPathExpression(
-                                \sprintf(
-                                    'Path "%s" is not a %s property',
-                                    $singlePropertyPath,
-                                    Period::class
-                                ),
-                                0,
-                                $e
-                            );
+                            throw new InvalidPeriodPathExpression(\sprintf('Path "%s" is not a %s property', $singlePropertyPath, Period::class), 0, $e);
                         }
                     }
                 }
@@ -108,6 +99,7 @@ class PeriodExprBuilder
         if (\is_numeric($entityIndex)) {
             return $this->qb->getRootEntities()[$entityIndex];
         }
+
         return null;
     }
 }

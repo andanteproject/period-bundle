@@ -17,7 +17,7 @@ class ArticleWithPeriodEmbedded
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Embedded(class="League\Period\Period", columnPrefix="period_")
@@ -42,6 +42,7 @@ class ArticleWithPeriodEmbedded
     public function setPeriod(?Period $period): self
     {
         $this->period = $period;
+
         return $this;
     }
 }

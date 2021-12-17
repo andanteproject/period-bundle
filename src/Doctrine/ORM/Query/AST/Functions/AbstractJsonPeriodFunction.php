@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions;
 
-use Andante\PeriodBundle\Doctrine\DBAL\Type\PeriodType;
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\AST\PathExpression;
 use Doctrine\ORM\Query\Lexer;
@@ -16,7 +14,7 @@ abstract class AbstractJsonPeriodFunction extends FunctionNode
 {
     private PathExpression $fieldPathExpression;
 
-    abstract protected function getPropertyName() : string;
+    abstract protected function getPropertyName(): string;
 
     public function getSql(SqlWalker $sqlWalker): string
     {

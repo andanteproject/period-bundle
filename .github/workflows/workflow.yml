@@ -30,15 +30,9 @@ jobs:
     strategy:
       matrix:
         name:
-          - 'PHP 7.4 tests (Symfony 4.4)'
-          - 'PHP 7.4 tests (Symfony 5.4)'
           - 'PHP 8.0 tests (Symfony 5.4)'
           - 'PHP 8.0 tests (Symfony 6.0)'
         include:
-          - php: '7.4'
-            symfony: 4.4.*
-          - php: '7.4'
-            symfony: 5.4.*
           - php: '8.0'
             symfony: 5.4.*
           - php: '8.0'

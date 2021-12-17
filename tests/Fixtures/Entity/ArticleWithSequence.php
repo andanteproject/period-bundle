@@ -17,7 +17,7 @@ class ArticleWithSequence
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="sequence", nullable=true)
@@ -42,6 +42,7 @@ class ArticleWithSequence
     public function setPeriod(?Sequence $period): self
     {
         $this->period = $period;
+
         return $this;
     }
 }

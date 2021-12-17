@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Doctrine\ORM\Query\AST\Functions;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\AST\PathExpression;
 use Doctrine\ORM\Query\Lexer;
@@ -30,6 +28,6 @@ abstract class AbstractEmbeddedPeriodFunction extends FunctionNode
         $this->fieldPathExpression = $parser->StateFieldPathExpression();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
 
-        $this->fieldPathExpression->field .= sprintf(".%s", $this->getPropertyName());
+        $this->fieldPathExpression->field .= \sprintf('.%s', $this->getPropertyName());
     }
 }

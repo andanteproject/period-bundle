@@ -17,7 +17,7 @@ class ArticleWithDuration
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id  = null;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="duration", nullable=true)
@@ -42,6 +42,7 @@ class ArticleWithDuration
     public function setDuration(?Duration $duration): self
     {
         $this->duration = $duration;
+
         return $this;
     }
 }

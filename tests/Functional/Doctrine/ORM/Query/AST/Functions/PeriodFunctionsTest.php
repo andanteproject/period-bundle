@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Tests\Functional\Doctrine\ORM\Query\AST\Functions;
 
 use Andante\PeriodBundle\Tests\Fixtures\Entity\ArticleWithPeriod;
@@ -30,7 +29,7 @@ class PeriodFunctionsTest extends KernelTestCase
         );
         $article = new ArticleWithPeriod($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();
@@ -62,7 +61,7 @@ class PeriodFunctionsTest extends KernelTestCase
 
         $article = new ArticleWithPeriodEmbedded($period);
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->persist($article);
         $em->flush();
         $em->clear();

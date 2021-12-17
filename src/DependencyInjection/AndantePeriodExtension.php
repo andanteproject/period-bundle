@@ -46,7 +46,7 @@ class AndantePeriodExtension extends Extension implements PrependExtensionInterf
                     'AndantePeriod' => [
                         'is_bundle' => false,
                         'type' => 'xml',
-                        'dir' => sprintf('%s/../Resources/config/orm', __DIR__),
+                        'dir' => \sprintf('%s/../Resources/config/orm', __DIR__),
                         'prefix' => 'League\Period',
                     ],
                 ],

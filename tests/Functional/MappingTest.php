@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Tests\Functional;
 
 use Andante\PeriodBundle\Tests\HttpKernel\AndantePeriodKernel;
@@ -31,7 +30,7 @@ class MappingTest extends KernelTestCase
     public function testMapping(): void
     {
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
         $classMetadata = $em->getClassMetadata(Period::class);
         self::assertArrayHasKey('startDate', $classMetadata->fieldMappings);
         self::assertArrayHasKey('endDate', $classMetadata->fieldMappings);

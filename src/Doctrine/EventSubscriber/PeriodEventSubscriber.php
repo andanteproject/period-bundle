@@ -6,13 +6,13 @@ namespace Andante\PeriodBundle\Doctrine\EventSubscriber;
 
 use Andante\PeriodBundle\Config\Doctrine\EmbeddedPeriod\Configuration as EmbeddedPeriodConfiguration;
 use Andante\PeriodBundle\PropertyAccess\PropertyAccessor;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use League\Period\Period;
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
 class PeriodEventSubscriber implements EventSubscriber, EventSubscriberInterface
 {
@@ -36,10 +36,10 @@ class PeriodEventSubscriber implements EventSubscriber, EventSubscriberInterface
     public function postLoad(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getEntity();
-        $classMetadata = $eventArgs->getEntityManager()->getClassMetadata(get_class($entity));
+        $classMetadata = $eventArgs->getEntityManager()->getClassMetadata(\get_class($entity));
         // Let's search for embedded Period entities
         foreach ($classMetadata->embeddedClasses as $propertyName => $config) {
-            if ($config['class'] === Period::class) {
+            if (Period::class === $config['class']) {
                 // Yes! Let's analyze each embeddable Period property
                 $embeddablePeriod = $this->propertyAccessor->getValue($entity, $propertyName);
                 // Let's check if this embeddablePeriod should be null
@@ -55,12 +55,12 @@ class PeriodEventSubscriber implements EventSubscriber, EventSubscriberInterface
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
     {
         $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
-        if (null === $classMetadata->reflClass && ! $classMetadata->isMappedSuperclass) {
+        if (null === $classMetadata->reflClass) {
             return;
         }
 
         $entityName = $classMetadata->reflClass->getName();
-        if ($entityName === Period::class) {
+        if (Period::class === $entityName) {
             $classMetadata->isEmbeddedClass = true;
             $classMetadata->mapField([
                 'fieldName' => 'startDate',

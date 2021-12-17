@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace Andante\PeriodBundle\Tests\Fixtures\Entity;
 
-use League\Period\Period;
 use Doctrine\ORM\Mapping as ORM;
+use League\Period\Period;
 
 /**
  * @ORM\Embeddable()

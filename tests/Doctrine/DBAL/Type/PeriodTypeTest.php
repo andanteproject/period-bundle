@@ -3,11 +3,8 @@
 namespace Andante\PeriodBundle\Tests\Doctrine\DBAL\Type;
 
 use Andante\PeriodBundle\Doctrine\DBAL\Type\PeriodType;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\Type;
-use League\Period\Duration;
 use League\Period\Period;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +16,7 @@ class PeriodTypeTest extends TestCase
     public function testConvertToDatabaseValue(?Period $period, ?string $dbValue): void
     {
         $periodType = new PeriodType();
-        self::assertSame($dbValue, $periodType->convertToDatabaseValue($period, new MySqlPlatform()));
+        self::assertSame($dbValue, $periodType->convertToDatabaseValue($period, new MySQLPlatform()));
     }
 
     /**
@@ -28,7 +25,7 @@ class PeriodTypeTest extends TestCase
     public function testConvertToPHPValue(?Period $period, ?string $dbValue): void
     {
         $periodType = new PeriodType();
-        self::assertEquals($period, $periodType->convertToPHPValue($dbValue, new MySqlPlatform()));
+        self::assertEquals($period, $periodType->convertToPHPValue($dbValue, new MySQLPlatform()));
     }
 
     public function conversionTests(): array
@@ -37,6 +34,7 @@ class PeriodTypeTest extends TestCase
         $startDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 00:00:00');
         /** @var \DateTimeImmutable $endDate */
         $endDate = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-02 00:00:00');
+
         return [
             [
                 Period::fromDatepoint(
@@ -63,7 +61,7 @@ class PeriodTypeTest extends TestCase
             Period::class
         ));
         $durationType = new PeriodType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 
     public function testShouldRaiseExceptionToPHPValue(): void
@@ -76,6 +74,6 @@ class PeriodTypeTest extends TestCase
             Period::class
         ));
         $durationType = new PeriodType();
-        $durationType->convertToDatabaseValue($invalidValue, new MySqlPlatform());
+        $durationType->convertToDatabaseValue($invalidValue, new MySQLPlatform());
     }
 }

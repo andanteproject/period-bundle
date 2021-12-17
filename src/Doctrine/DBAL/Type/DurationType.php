@@ -20,6 +20,7 @@ class DurationType extends DateIntervalType
         if (null === $value) {
             return null;
         }
+
         return Duration::createFromDateInterval($value);
     }
 
@@ -28,12 +29,7 @@ class DurationType extends DateIntervalType
         try {
             return parent::convertToDatabaseValue($value, $platform);
         } catch (ConversionException $e) {
-            throw ConversionException::conversionFailedInvalidType(
-                $value,
-                $this->getName(),
-                ['null', Duration::class],
-                $e
-            );
+            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', Duration::class], $e);
         }
     }
 

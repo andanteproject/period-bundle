@@ -8,7 +8,6 @@ use Andante\PeriodBundle\Tests\HttpKernel\AndantePeriodKernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\Persistence\ManagerRegistry;
 
 class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
 {
@@ -20,7 +19,7 @@ class KernelTestCase extends \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase
     protected function createSchema(): void
     {
         /** @var EntityManagerInterface $em */
-        $em = self::$container->get('doctrine.orm.default_entity_manager');
+        $em = self::getContainer()->get('doctrine.orm.default_entity_manager');
 
         /** @var array<int, ClassMetadata> $allMetadata */
         $allMetadata = $em->getMetadataFactory()->getAllMetadata();

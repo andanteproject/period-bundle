@@ -9,6 +9,7 @@ use Symfony\Component\PropertyAccess\Exception\UninitializedPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccess as SfPropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor as SfPropertyAccessor;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\PropertyAccess\PropertyPathInterface;
 
 class PropertyAccessor implements PropertyAccessorInterface
 {
@@ -24,64 +25,35 @@ class PropertyAccessor implements PropertyAccessorInterface
         return new self(SfPropertyAccess::createPropertyAccessor());
     }
 
-    /**
-     * @param array|object                                                   $objectOrArray
-     * @param string|\Symfony\Component\PropertyAccess\PropertyPathInterface $propertyPath
-     * @param mixed                                                          $value
-     */
-    public function setValue(&$objectOrArray, $propertyPath, $value): void
+    public function setValue(object|array &$objectOrArray, string|PropertyPathInterface $propertyPath, mixed $value): void
     {
         $this->propertyAccessor->setValue($objectOrArray, $propertyPath, $value);
     }
 
-    /**
-     * @param array|object                                                   $objectOrArray
-     * @param string|\Symfony\Component\PropertyAccess\PropertyPathInterface $propertyPath
-     *
-     * @return mixed|null
-     */
-    public function getValue($objectOrArray, $propertyPath)
+    public function getValue(object|array $objectOrArray, string|PropertyPathInterface $propertyPath): mixed
     {
         return $this->propertyAccessor->getValue($objectOrArray, $propertyPath);
     }
 
-    /**
-     * @param array|object                                                   $objectOrArray
-     * @param string|\Symfony\Component\PropertyAccess\PropertyPathInterface $propertyPath
-     *
-     * @return bool
-     */
-    public function isWritable($objectOrArray, $propertyPath): bool
+    public function isWritable(object|array $objectOrArray, string|PropertyPathInterface $propertyPath): bool
     {
         return $this->propertyAccessor->isWritable($objectOrArray, $propertyPath);
     }
 
-    /**
-     * @param array|object                                                   $objectOrArray
-     * @param string|\Symfony\Component\PropertyAccess\PropertyPathInterface $propertyPath
-     *
-     * @return bool
-     */
-    public function isReadable($objectOrArray, $propertyPath): bool
+    public function isReadable(object|array $objectOrArray, string|PropertyPathInterface $propertyPath): bool
     {
         return $this->propertyAccessor->isReadable($objectOrArray, $propertyPath);
     }
 
-    /**
-     * @param array|object                                                   $objectOrArray
-     * @param string|\Symfony\Component\PropertyAccess\PropertyPathInterface $propertyPath
-     *
-     * @return bool
-     */
-    public function isUninitialized($objectOrArray, $propertyPath): bool
+    public function isUninitialized(object|array $objectOrArray, string|PropertyPathInterface $propertyPath): bool
     {
         try {
             $this->propertyAccessor->getValue($objectOrArray, $propertyPath);
         } catch (AccessException $e) {
-            if (! $e instanceof UninitializedPropertyException &&
+            if (!$e instanceof UninitializedPropertyException &&
                 (
-                    class_exists(UninitializedPropertyException::class) ||
-                    str_contains('You should initialize it', $e->getMessage())
+                    \class_exists(UninitializedPropertyException::class) ||
+                    \str_contains('You should initialize it', $e->getMessage())
                 )
             ) {
                 throw $e;
@@ -89,6 +61,7 @@ class PropertyAccessor implements PropertyAccessorInterface
 
             return true;
         }
+
         return false;
     }
 }
