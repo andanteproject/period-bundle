@@ -18,8 +18,6 @@ abstract class AbstractPeriodFunction extends FunctionNode
 {
     private PathExpression $fieldPathExpression;
 
-    private static ?\ReflectionProperty $rpParserQuery = null;
-
     private bool $embedded = false;
 
     public const NAME = '*';
@@ -75,13 +73,11 @@ abstract class AbstractPeriodFunction extends FunctionNode
 
     private function getQueryFromParser(Parser $parser): Query
     {
-        if (null === static::$rpParserQuery) {
-            static::$rpParserQuery = new \ReflectionProperty(Parser::class, 'query');
-        }
+        $rpParserQuery = new \ReflectionProperty(Parser::class, 'query');
         // I'm so sorry Doctrine... So sorry. (∩ ͡ ° ʖ ͡ °) ⊃-(===>
-        static::$rpParserQuery->setAccessible(true);
-        $query = static::$rpParserQuery->getValue($parser);
-        static::$rpParserQuery->setAccessible(false);
+        $rpParserQuery->setAccessible(true);
+        $query = $rpParserQuery->getValue($parser);
+        $rpParserQuery->setAccessible(false);
         // Shhhh. It's all right, Doctrine... Nothing happened... It's all right... ( ಠ ͜ʖಠ)
         return $query;
     }

@@ -80,7 +80,7 @@ class PeriodExprBuilder
                         }
                         try {
                             $fieldMapping = $rootClassMetadata->getFieldMapping($fieldName);
-                            if (isset($fieldMapping['type']) && PeriodType::NAME === $fieldMapping['type']) {
+                            if (PeriodType::NAME === $fieldMapping['type']) {
                                 return false;
                             }
                         } catch (MappingException $e) {
