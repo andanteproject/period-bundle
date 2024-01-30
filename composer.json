@@ -37,12 +37,12 @@
     ],
     "require": {
         "php": "^8.0",
-        "symfony/framework-bundle": "^5.4 || ^6.0",
-        "league/period": "^4.0",
+        "symfony/framework-bundle": "^5.4 || ^6.3 || ^7.0",
+        "league/period": "^4.0 || ^5.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "symfony/property-access": "^5.4 || ^6.0",
-        "symfony/form": "^5.4 || ^6.0",
-        "symfony/validator": "^5.4 || ^6.0"
+        "symfony/property-access": "^5.4 || ^6.3 || ^7.0",
+        "symfony/form": "^5.4 || ^6.3 || ^7.0",
+        "symfony/validator": "^5.4 || ^6.3 || ^7.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
@@ -51,7 +51,7 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/phpstan": "^1.2",
-        "symfony/yaml": "^5.4 || ^6.0",
+        "symfony/yaml": "^5.4 || ^6.3 || ^7.0",
         "phpunit/phpunit": "^9.5",
         "ext-json": "*",
         "doctrine/orm": "^2.8",
